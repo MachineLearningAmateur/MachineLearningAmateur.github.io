@@ -1,54 +1,117 @@
+<head>
+    <script src="https://kit.fontawesome.com/7d686e8f82.js" crossorigin="anonymous"></script>
+    <link rel=“stylesheet” type=“text/css” href=“style.css” />
+</head>
+  
+  <body>
+    <nav id="navbar">
+      <a href="#welcome-section">About</a>
+      <a href="#projects">Work</a>
+      <a href=#contact>Contact</a>
+    </nav>
+    <main>
+      <section id="welcome-section">
+        <div></div>
+        <h1 class="brackets">&lt</h1>
+        <h1 id="welcome-text">Hello World, I am James Zhang</h1>
+        <h1 class="brackets">/&gt</h1>
+        <p><i class="anim" data-type='["an aspiring developer", "an experimenter", "an enthusiastic learner"]'></i></p>
+      </section>
+      <section id="projects">
+        <p><u>Here are some of my projects</u></p>
+        <div id="project-grid">
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/full/xxdKNYv" target="_blank"><img id="img" src="https://i.ibb.co/hX8WpBc/triburte.png" alt="tribute" border="0">
+            <div id="label">Tribute Page</div>
+          </a>
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/full/OJmJLKz" target="_blank"><img id="img" src="https://i.ibb.co/2cTZ3G7/survey.png" alt="survey">
+            <div id="label">Pizza Survey</div>
+          </a>
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/full/gOWOeZj" target="_blank"><img id="img" src="https://i.ibb.co/xFVQ3Fw/img.png" alt="product">
+            <div id="label">Product Page</div>
+          </a>
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/full/XWRJNZP" target="_blank"><img id="img" src="https://i.ibb.co/4KjJSxd/documentation.png" alt="documentation">
+            <div id="label">League Guide</div>
+          </a>
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/full/gOWBxqX" target="_blank"><img id="img" src="https://i.ibb.co/h7fNtmV/tic.png" alt="Tic-Tac-Toe">
+            <div id="label">Tic-Tac Toe React Tutorial</div>
+          </a>
+          <a class="project-tile" href="https://codepen.io/machinelearningamateur/pens/public" target="_blank"><img id="img" src="https://i.ibb.co/9h2TGZc/all.png" alt="Show All">
+            <div id="label">Show All</div>
+          </a>
+        </div>
+      </section>
+      <section id="contact">
+        <h1 id="work-together"><i class="anim" data-type='["Let&#39s work together!", "Let&#39s make some plans..."]'></i></h1>       <img class="hands" src="https://previews.123rf.com/images/rudall30/rudall301509/rudall30150900036/45522089-sketch-illustration-of-two-hands-holding-each-other-strongly.jpg">
+        <div id="links">
+          <a href="https://www.freecodecamp.org/disgustingtest" target="_blank" class="contact-details"><i class="fab fa-free-code-camp"></i>FreeCodeCamp</a>
+          <a href="https://github.com/MachineLearningAmateur" target="_blank" class="contact-details"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://www.linkedin.com/in/james-zhang-cs/" target="_blank" class="contact-details"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="mailto:jzhan326@ucr.edu" target="_blank" class="contact-details"><i class="fas fa-envelope-square"></i> Send a mail<a>
+              <a id="call" href=# class="contact-details"><i class="fas fa-mobile-alt"></i> Call me<a>
+        </div>
+      </section>
+    </main>
+  </body>
 
-<!-- Defines a Comment -->
+<script>
+    var Txt = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
 
-<!-- <!DOCTYPE> - Defines the document type -->
-<!DOCTYPE>
+    Txt.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
 
-<!-- <html> -  Defines an HTML Document -->
-<html></html>
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+        var that = this;
+        var delta = 200 - Math.random() * 100;
 
-<!-- <head> - Contains metadata information for the document -->
-<head></head>
+        if (this.isDeleting) { 
+          delta /= 2; 
+        }
 
-<!-- <title> - Defines a title for the document -->
-<title>Basic Tags</title>
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 400;
+        }
 
-<!-- <link> Defines the relationship between a document and an external resource (mostly used to link to a style sheet) -->
-<link rel='stylesheet' href='/css/master.css'>
+        setTimeout(() => that.tick(), delta);
+    };
+    
+    var callAlert = (event) => {
+      alert('Sorry, this is only a mock portfolio.');
+    }
+    window.onload = function() {
+        var elements = document.getElementsByClassName('anim');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new Txt(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".anim > .wrap { border-right: 0.08em solid #fff}";
+        var alert = document.getElementById('call');
+        alert.addEventListener('click', callAlert);
+        document.body.appendChild(css);
+    };
+</script>
 
-<!-- <body> Defines the documents body -->
-<body>
-
-<!-- <h1> to <h6> - Defines HTML Headings -->
-  <h1>Heading 1</h1>
-  <h2>Heading 2</h2>
-  <h3>Heading 3</h3>
-  <h4>Heading 4</h4>
-  <h5>Heading 5</h5>
-  <h6>Heading 6</h6>
-
-<!-- <br> - Inserts a single line break -->
-  <br>
-  <br>
-  <br>
-
-
-<!-- <hr> - Defines a thematic change in the content -->
-  <hr> 
-
-<!-- <p> - Defines a Paragraph -->
-  <p>This is my first paragraph.</p>
-
-<!-- <a> - Defines a hyperlink -->
-  <a href='https://www.google.com' target='_blank'>My First Link</a>  <!--opens a new tab-->
-  <a href='https://www.google.com' target='_parent'>My Second Link</a> 
-  <a href='https://www.google.com' target='_self'>My Third Link</a>
-  <a href='https://www.google.com' target='_top'>My Fourth Link</a>
-
-
-</body>
-
-
-<!-- <meta> -  Defines metadata about an HTML Document -->
-<meta name='twitter:' content=''>
-<!-- Defines style information for a document -->

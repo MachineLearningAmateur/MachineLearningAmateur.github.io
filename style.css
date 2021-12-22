@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+:root {
+ --black: #111;
+ --pink: #b80488;
+ --label: #203030;
+ --teal: #3c8282;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.brackets {
+  color: brown;
+  animation: sample 3s infinite;
+  font-weight: 750;
+}
+
+.brackets, #welcome-text {
+  display: inline;
+}
+
+@keyframes sample {
+  50% {
+    opacity: 0;
+  }
+}
+#navbar {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--pink);
+  justify-content: flex-end;
+}
+
+#navbar a {
+  height: 100%;
+  text-decoration: none;
+  color: white;
+  padding: 2vh 2vw;
+}
+
+#navbar a:hover {
+  background-color: var(--black);
+}
+
+main {
+  display: block;
+  margin: 0px; /*this shifts the main section below the fixed navbar*/
+  width: 100%;
+}
+
+#welcome-section {
+  display: block;
+  background: var(--black);
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 2rem;
+  height: 100vh; /*vh refers to viewport height; 100% of viewport height?*/
+  margin-top: 0px;
+  display: block;
+}
+
+#welcome-text {
+  font-weight: 750; 
+  color: white;
+}
+
+#welcome-section p {
+  color: var(--pink)
+}
+
+#welcome-section div {
+  padding-top: 40vh;
+}
+
+#projects {
+  display: block;
+  background: darkslategray;
+  height: 100vh;
+  width: 100%;
+}
+
+#projects p {
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 100px;
+  font-family: Poppins, sans-serif;
+  padding-bottom: 100px;
+  color: white;
+  font-weight: 700;
+}
+
+#project-grid {
+  margin: 0px auto;
+  max-width: 1280px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 4rem;
+  justify-items: center;
+}
+
+#img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.hands {
+  width: 30%;
+  height: 40%;
+  object-fit: cover;
+  display:block;
+  margin: 0 auto;
+  margin-top: 3vh;
+  border-radius: 100%;
+  border: solid;
+
+}
+
+#label {
+  font-family: Poppins, sans-serif;
+  display: block;
+  width: 100%;
+  background: var(--label);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+.project-tile {
+  text-decoration: none;
+}
+.project-tile:hover #label:before {
+  content: '<';
+  color: orangered;
+}
+
+.project-tile:hover #label:after {
+  content: '/>';
+  color: orangered;
+}
+
+#contact {
+  display: block;
+  height: 100vh;
+  background: var(--teal);
+  text-align: center;
+}
+
+#work-together {
+  text-align: center;
+  font-size: 3.5rem;
+  padding-top: 20vh;
+  font-family: Poppins, sans-serif;
+  color: white;
+}
+
+#links {
+  display: flex;
+  flex-direction: row;
+  margin: 2.5rem auto;
+  width: 100%;
+  justify-content: center;
+}
+
+.contact-details {
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+  padding: 0 2rem;
+}
+
+.contact-details:hover {
+   animation: bounce 1.5s infinite; /*other browsers*/
+   -webkit-animation: bounce 1.5s infinite; /*webkit browsers*/
+   -moz-animation: bounce 1.5s infinite; /*firefox*/
+   -o-animation: bounce 1.5s infinite; /*opera*/
+}
+
+@-webkit-keyframes bounce {
+    0%,  
+    100% {
+       -webkit-transform: translateY(0);
+    } 
+    50% {
+        -webkit-transform: translateY(-10px);
+    }
+}
+@-moz-keyframes bounce {
+    0%, 
+    100% {
+       -moz-transform: translateY(0);
+    }
+    50% {
+       -moz-transform: translateY(-10px);
+    }
+}
+@-o-keyframes bounce {
+    0%,
+    100% {
+       -o-transform: translateY(0);
+    }
+    50% {
+       -o-transform: translateY(-10px);
+    }
+}
+@keyframes bounce {
+    0%,  
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@media only screen 
+  and (min-device-width: 414px) 
+  and (max-device-width: 736px) 
+  and (-webkit-min-device-pixel-ratio: 3) { 
+  * {
+       font-size: 15px;
+       width: 100%;
+       height: 50px;
+      }
+}
+
+ 
