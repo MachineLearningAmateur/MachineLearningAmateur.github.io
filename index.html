@@ -51,7 +51,7 @@
           <a href="https://github.com/MachineLearningAmateur" target="_blank" class="contact-details"><i class="fab fa-github"></i> GitHub</a>
           <a href="https://www.linkedin.com/in/james-zhang-cs/" target="_blank" class="contact-details"><i class="fab fa-linkedin"></i> LinkedIn</a>
           <a href="mailto:jameszh4ng@gmail.com" target="_blank" class="contact-details"><i class="fas fa-envelope-square"></i> Send a mail<a>
-              <a id="call" href=# class="contact-details"><i class="fas fa-mobile-alt"></i> Call me<a>
+              <a id="call" href="/resources/resume.pdf" target="_blank" class="contact-details"><i class="fa fa-file-pdf-o"></i> Resume<a>
         </div>
       </section>
     </main>
@@ -97,9 +97,6 @@
         setTimeout(() => that.tick(), delta);
     };
     
-    var callAlert = (event) => {
-      alert('Sorry, this is only a mock portfolio.');
-    }
     window.onload = function() {
         var elements = document.getElementsByClassName('anim');
         for (var i=0; i<elements.length; i++) {
@@ -113,8 +110,6 @@
         var css = document.createElement("style");
         css.type = "text/css";
         css.innerHTML = ".anim > .wrap { border-right: 0.08em solid #fff}";
-        var alert = document.getElementById('call');
-        alert.addEventListener('click', callAlert);
         document.body.appendChild(css);
     };
 </script>
