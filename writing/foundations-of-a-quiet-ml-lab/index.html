@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Foundations of a Quiet ML Lab · James Z</title>
+    <meta
+      name="description"
+      content="A sample essay about building deliberate machine learning workflows."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="/assets/css/site.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="wrap site-header__inner">
+          <a class="site-mark" href="/" aria-label="James Z home">
+            <span class="site-mark__name">James Z</span>
+            <span class="site-mark__tag">ML Notes and Builds</span>
+          </a>
+          <nav class="site-nav" aria-label="Primary">
+            <a class="site-nav__link" href="/">Home</a>
+            <a class="site-nav__link" href="/about/">About</a>
+            <a class="site-nav__link" href="/projects/">Projects</a>
+            <a class="site-nav__link site-nav__link--active" href="/writing/">Writing</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="post-shell">
+        <header class="post-header">
+          <p class="eyebrow">Writing</p>
+          <h1>Foundations of a Quiet ML Lab</h1>
+          <p class="post-meta">May 18, 2026 · 7 min read · Placeholder essay</p>
+        </header>
+
+        <article class="post-body">
+          <p>
+            A lot of early machine learning work fails for a boring reason: the surrounding process
+            is too noisy to support judgment. Results appear, but they are hard to trust. Notes
+            exist, but they do not explain what changed. Code runs, but only in the memory of the
+            person who last touched it. A quiet lab is an attempt to reverse that pattern.
+          </p>
+
+          <div class="post-callout">
+            <strong>Placeholder premise.</strong>
+            <p>
+              The goal is not slowness for its own sake. The goal is enough calm in the workflow
+              that the signal from an experiment can be separated from the mess around it.
+            </p>
+          </div>
+
+          <h2>Start with a surface you can reread</h2>
+          <p>
+            Before adding automation, dashboards, or shared infrastructure, it helps to ask a
+            simpler question: if a result looked surprising tomorrow, what would need to be written
+            down today for that surprise to be explainable?
+          </p>
+          <p>
+            A decent answer usually includes the dataset version, the objective, the baseline
+            expectation, and the smallest number of knobs that changed. Anything beyond that may be
+            useful, but those pieces make the experiment legible.
+          </p>
+
+          <h2>Keep the feedback loop humane</h2>
+          <p>
+            Small experiments are underrated because they often look unserious. In practice, they
+            force a kind of honesty. If the setup is tiny, the excuses get smaller too. You can see
+            whether the metric moved, whether the preprocessing is wrong, and whether the claimed
+            improvement survives a rerun.
+          </p>
+
+          <pre><code>run_id: 2026-05-18-a
+dataset: image_subset_v2
+baseline: cnn_3layer_default
+change: lower learning rate from 1e-3 to 3e-4
+expectation: slightly slower convergence, better stability
+outcome: validation loss smoother, accuracy unchanged</code></pre>
+
+          <p>
+            That kind of note is not glamorous, but it creates a chain of reasoning that can later
+            support a more ambitious project page or technical essay.
+          </p>
+
+          <h2>Public writing changes the standard</h2>
+          <p>
+            Writing for a public site introduces a healthy pressure: if the story of the experiment
+            sounds thin in prose, the experiment itself may still be thin. That is useful
+            information. The act of explaining often reveals where the work needs another pass.
+          </p>
+
+          <blockquote>
+            Publish fewer claims. Preserve more evidence.
+          </blockquote>
+
+          <p>
+            This site is structured around that idea. The essays can stay concise, but they should
+            point to work that was actually done, actually examined, and actually understood.
+          </p>
+        </article>
+
+        <nav class="post-nav">
+          <a class="text-link" href="/writing/">Back to all writing</a>
+        </nav>
+      </main>
+
+      <footer class="site-footer">
+        <div class="wrap site-footer__inner">
+          <p>James Z · A static GitHub Pages site for experiments, notes, and project writeups.</p>
+          <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -3,24 +3,157 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MachineLearningAmateur</title>
+    <title>James Z</title>
     <meta
       name="description"
-      content="Personal site for MachineLearningAmateur."
+      content="Technical notes, projects, and machine learning experiments in public."
     >
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="/assets/css/site.css">
   </head>
-  <body>
-    <main class="hero">
-      <p class="eyebrow">MachineLearningAmateur</p>
-      <h1>Building ideas, models, and experiments in public.</h1>
-      <p class="intro">
-        This repository is now set up as the root GitHub Pages site. Replace
-        this landing page with your real content whenever you're ready.
-      </p>
-      <div class="actions">
-        <a href="https://github.com/MachineLearningAmateur">GitHub</a>
-      </div>
-    </main>
+  <body class="page-home">
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="wrap site-header__inner">
+          <a class="site-mark" href="/" aria-label="James Z home">
+            <span class="site-mark__name">James Z</span>
+            <span class="site-mark__tag">ML Notes and Builds</span>
+          </a>
+          <nav class="site-nav" aria-label="Primary">
+            <a class="site-nav__link site-nav__link--active" href="/">Home</a>
+            <a class="site-nav__link" href="/about/">About</a>
+            <a class="site-nav__link" href="/projects/">Projects</a>
+            <a class="site-nav__link" href="/writing/">Writing</a>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="wrap hero__grid">
+            <div class="hero__copy">
+              <p class="eyebrow">James Z</p>
+              <h1>Building a steady practice around models, tools, and small experiments.</h1>
+              <p class="lead">
+                This site is a working home for project notes, portfolio pieces, and essays about
+                learning machine learning in public. The current version is intentionally light on
+                polish and heavy on structure so it can grow with real work over time.
+              </p>
+              <div class="hero__actions">
+                <a class="button button--primary" href="/writing/">Read the notebook</a>
+                <a class="button button--ghost" href="/projects/">Browse projects</a>
+              </div>
+            </div>
+            <aside class="hero-card">
+              <div class="hero-card__art">
+                <img src="/assets/img/monogram.svg" alt="" width="120" height="120">
+              </div>
+              <p class="hero-card__label">Current orientation</p>
+              <ul class="hero-card__list">
+                <li>Small-model baselines before large claims</li>
+                <li>Readable experiment logs over dashboard sprawl</li>
+                <li>Projects that can survive revision in public</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="wrap">
+            <div class="section-heading">
+              <p class="eyebrow">Featured Work</p>
+              <h2>Projects with room to mature into real case studies.</h2>
+            </div>
+            <div class="card-grid">
+              <article class="project-card">
+                <p class="project-card__meta">Evaluation · Placeholder</p>
+                <h3>Baseline Audit Notebook</h3>
+                <p>
+                  A compact workflow for checking whether a promising result is just a data leak,
+                  a lucky seed, or an actual improvement.
+                </p>
+                <a class="text-link" href="/projects/">See project notes</a>
+              </article>
+              <article class="project-card">
+                <p class="project-card__meta">Tooling · Placeholder</p>
+                <h3>Experiment Ledger</h3>
+                <p>
+                  A lightweight system for logging runs, decisions, and dead ends without pulling
+                  in a full platform stack on day one.
+                </p>
+                <a class="text-link" href="/projects/">See project notes</a>
+              </article>
+              <article class="project-card">
+                <p class="project-card__meta">Research Practice · Placeholder</p>
+                <h3>Paper-to-Prototype Cycle</h3>
+                <p>
+                  A monthly routine for turning one paper, one reproduction, and one written
+                  critique into a durable learning loop.
+                </p>
+                <a class="text-link" href="/projects/">See project notes</a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section--muted">
+          <div class="wrap split">
+            <div>
+              <div class="section-heading">
+                <p class="eyebrow">Recent Writing</p>
+                <h2>Notes meant to age well.</h2>
+              </div>
+              <div class="writing-list">
+                <a class="writing-list__item" href="/writing/foundations-of-a-quiet-ml-lab/">
+                  <span class="writing-list__date">May 2026</span>
+                  <span class="writing-list__body">
+                    <strong>Foundations of a Quiet ML Lab</strong>
+                    <span>Why slow, legible workflows are often a better starting point than high-throughput ambition.</span>
+                  </span>
+                </a>
+                <a class="writing-list__item" href="/writing/shipping-small-model-experiments/">
+                  <span class="writing-list__date">May 2026</span>
+                  <span class="writing-list__body">
+                    <strong>Shipping Small-Model Experiments</strong>
+                    <span>How to make toy experiments useful instead of disposable.</span>
+                  </span>
+                </a>
+                <a class="writing-list__item" href="/writing/notes-on-baselines-before-benchmarks/">
+                  <span class="writing-list__date">May 2026</span>
+                  <span class="writing-list__body">
+                    <strong>Notes on Baselines Before Benchmarks</strong>
+                    <span>A short argument for proving boring things first.</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <aside class="note-panel">
+              <p class="eyebrow">Contact</p>
+              <h3>Still assembling the public profile.</h3>
+              <p>
+                For now, this site assumes a simple publishing rhythm: build something small,
+                write down what happened, then refine the presentation later.
+              </p>
+              <div class="link-stack">
+                <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
+                <span class="muted">Email and additional social links will be added with real profile details.</span>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="wrap site-footer__inner">
+          <p>James Z · A static GitHub Pages site for experiments, notes, and project writeups.</p>
+          <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>

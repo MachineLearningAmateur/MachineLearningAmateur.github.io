@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Notes on Baselines Before Benchmarks · James Z</title>
+    <meta
+      name="description"
+      content="A sample essay about baseline discipline in machine learning projects."
+    >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="/assets/css/site.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="wrap site-header__inner">
+          <a class="site-mark" href="/" aria-label="James Z home">
+            <span class="site-mark__name">James Z</span>
+            <span class="site-mark__tag">ML Notes and Builds</span>
+          </a>
+          <nav class="site-nav" aria-label="Primary">
+            <a class="site-nav__link" href="/">Home</a>
+            <a class="site-nav__link" href="/about/">About</a>
+            <a class="site-nav__link" href="/projects/">Projects</a>
+            <a class="site-nav__link site-nav__link--active" href="/writing/">Writing</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="post-shell">
+        <header class="post-header">
+          <p class="eyebrow">Writing</p>
+          <h1>Notes on Baselines Before Benchmarks</h1>
+          <p class="post-meta">May 5, 2026 · 5 min read · Placeholder essay</p>
+        </header>
+
+        <article class="post-body">
+          <p>
+            Benchmarks are seductive because they promise narrative. A single number can imply
+            momentum, competition, and progress. The problem is that benchmarks only mean something
+            when the baseline beneath them is stable enough to deserve comparison.
+          </p>
+
+          <h2>Most dramatic improvements are built on small assumptions</h2>
+          <p>
+            If the data split changed, the seed was lucky, or the preprocessing drifted between
+            runs, the benchmark story is mostly theater. Baseline work is the quieter discipline of
+            proving that the ordinary parts of the system behave the way you think they do.
+          </p>
+
+          <h2>A useful baseline checklist</h2>
+          <ul>
+            <li>Can the default setup be rerun with similar results?</li>
+            <li>Is the evaluation script checking the right thing?</li>
+            <li>Are failures concentrated in one obvious slice of the data?</li>
+            <li>Would another person understand the comparison without extra context?</li>
+          </ul>
+
+          <p>
+            None of this is glamorous, but it protects the site from filling up with unsupported
+            stories. The project pages can eventually celebrate improvement. The writing pages
+            should first explain why the comparison is worth trusting.
+          </p>
+        </article>
+
+        <nav class="post-nav">
+          <a class="text-link" href="/writing/">Back to all writing</a>
+        </nav>
+      </main>
+
+      <footer class="site-footer">
+        <div class="wrap site-footer__inner">
+          <p>James Z · A static GitHub Pages site for experiments, notes, and project writeups.</p>
+          <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
