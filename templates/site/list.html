@@ -1,0 +1,25 @@
+{% extends "site/base.html" %}
+
+{% block content %}
+      <main class="site-frame list-page">
+        <p class="kicker">{{ section_label }}</p>
+        <div class="section-block item-list">
+          {% if entries %}
+            {% for entry in entries %}
+          <a class="item-list__entry" href="/{{ entry.entry_type }}/{{ entry.slug }}/">
+            <span class="item-list__date">{{ entry.display_date }}</span>
+            <span class="item-list__body">
+              <strong>{{ entry.title }}</strong>
+              <span>{{ entry.summary }}</span>
+              <span class="meta">{{ entry.read_minutes }} min read</span>
+            </span>
+          </a>
+            {% endfor %}
+          {% else %}
+          <div class="empty-state">
+            <p>{{ empty_message }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </main>
+{% endblock %}

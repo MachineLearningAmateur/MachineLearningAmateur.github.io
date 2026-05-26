@@ -1,0 +1,89 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+      <div class="admin-toolbar">
+        <div>
+          <p class="kicker">Authoring</p>
+          <h1 class="page-title">{% if original_entry %}Edit entry{% else %}Create a new entry{% endif %}</h1>
+        </div>
+        <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Back to Dashboard</a>
+      </div>
+
+      <p class="admin-note">Saving regenerates the static blog and reading pages, then attempts a git commit and push to <code>main</code>.</p>
+
+      <form class="admin-form" method="post">
+        <div class="admin-form__grid">
+          <label class="form-field">
+            <span>Type</span>
+            <select name="entry_type">
+              <option value="blog"{% if form_state.entry_type == 'blog' %} selected{% endif %}>Blog</option>
+              <option value="reading"{% if form_state.entry_type == 'reading' %} selected{% endif %}>Reading</option>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span>Date</span>
+            <input type="date" name="published_on" value="{{ form_state.published_on }}">
+          </label>
+        </div>
+
+        <label class="form-field">
+          <span>Title</span>
+          <input id="title" type="text" name="title" value="{{ form_state.title }}" placeholder="Creating This Site">
+        </label>
+
+        <label class="form-field">
+          <span>Slug</span>
+          <input id="slug" type="text" name="slug" value="{{ form_state.slug }}" placeholder="creating-this-site">
+        </label>
+
+        <label class="form-field">
+          <span>Summary</span>
+          <input type="text" name="summary" value="{{ form_state.summary }}" placeholder="One-line summary for the index page">
+        </label>
+
+        <label class="form-field">
+          <span>Body</span>
+          <textarea name="body_markdown" rows="18" placeholder="Write Markdown here...">{{ form_state.body_markdown }}</textarea>
+        </label>
+
+        {% if original_entry %}
+        <p class="admin-note">Current public path: <code>/{{ original_entry.entry_type }}/{{ original_entry.slug }}/</code></p>
+        {% endif %}
+
+        <div class="admin-actions">
+          <button class="admin-button" type="submit">Save Entry</button>
+          <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Cancel</a>
+        </div>
+      </form>
+
+      <script>
+        (() => {
+          const titleInput = document.getElementById("title");
+          const slugInput = document.getElementById("slug");
+
+          if (!titleInput || !slugInput) {
+            return;
+          }
+
+          let slugTouched = Boolean(slugInput.value.trim());
+
+          function slugify(value) {
+            return value
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/^-+|-+$/g, "") || "untitled-entry";
+          }
+
+          titleInput.addEventListener("input", () => {
+            if (!slugTouched) {
+              slugInput.value = slugify(titleInput.value);
+            }
+          });
+
+          slugInput.addEventListener("input", () => {
+            slugTouched = slugInput.value.trim().length > 0;
+          });
+        })();
+      </script>
+{% endblock %}

@@ -6,7 +6,7 @@
     <title>James Z</title>
     <meta
       name="description"
-      content="Technical notes, projects, and machine learning experiments in public."
+      content="James Z writes about machine learning, reading, and building in public."
     >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,144 +14,97 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
       rel="stylesheet"
     >
+    <script>
+      (() => {
+        const storageKey = "site-theme";
+        let theme = "light";
+
+        try {
+          const storedTheme = localStorage.getItem(storageKey);
+          if (storedTheme === "light" || storedTheme === "dark") {
+            theme = storedTheme;
+          } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            theme = "dark";
+          }
+        } catch (error) {
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            theme = "dark";
+          }
+        }
+
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="/assets/css/site.css">
+    <script src="/assets/js/theme.js" defer></script>
   </head>
-  <body class="page-home">
+  <body>
     <div class="site-shell">
       <header class="site-header">
-        <div class="wrap site-header__inner">
+        <div class="site-frame site-header__inner">
           <a class="site-mark" href="/" aria-label="James Z home">
             <span class="site-mark__name">James Z</span>
-            <span class="site-mark__tag">ML Notes and Builds</span>
           </a>
-          <nav class="site-nav" aria-label="Primary">
-            <a class="site-nav__link site-nav__link--active" href="/">Home</a>
-            <a class="site-nav__link" href="/about/">About</a>
-            <a class="site-nav__link" href="/projects/">Projects</a>
-            <a class="site-nav__link" href="/writing/">Writing</a>
-          </nav>
+          <div class="site-header__actions">
+            <nav class="site-nav" aria-label="Primary">
+              <a class="site-nav__link" href="/blog/">Blog</a>
+              <a class="site-nav__link" href="/reading/">Reading</a>
+            </nav>
+            <button
+              class="theme-toggle"
+              type="button"
+              aria-label="Switch to dark theme"
+              aria-pressed="false"
+              data-theme-toggle
+            >
+              <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M21 14.2A8.7 8.7 0 0 1 9.8 3a.75.75 0 0 0-.82.19A9.75 9.75 0 1 0 20.8 15a.75.75 0 0 0 .2-.8Z"/>
+              </svg>
+              <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 240 240" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M58.57 25.81c-2.13-3.67-.87-8.38 2.8-10.51 3.67-2.13 8.38-.88 10.51 2.8l9.88 17.1c2.13 3.67.87 8.38-2.8 10.51-3.67 2.13-8.38.88-10.51-2.8ZM120 51.17c19.01 0 36.21 7.7 48.67 20.16C181.12 83.79 188.83 101 188.83 120c0 19.01-7.7 36.21-20.16 48.67-12.46 12.46-29.66 20.16-48.67 20.16-19.01 0-36.21-7.7-48.67-20.16C58.88 156.21 51.17 139.01 51.17 120c0-19.01 7.7-36.21 20.16-48.67C83.79 58.88 101 51.17 120 51.17Zm38.27 30.56c-9.79-9.79-23.32-15.85-38.27-15.85-14.95 0-28.48 6.06-38.27 15.85-9.79 9.79-15.85 23.32-15.85 38.27 0 14.95 6.06 28.48 15.85 38.27 9.79 9.79 23.32 15.85 38.27 15.85 14.95 0 28.48-6.06 38.27-15.85 9.79-9.79 15.85-23.32 15.85-38.27 0-14.95-6.06-28.48-15.85-38.27ZM113.88 7.71c0-4.26 3.45-7.71 7.71-7.71 4.26 0 7.71 3.45 7.71 7.71v19.75c0 4.26-3.45 7.71-7.71 7.71-4.26 0-7.71-3.45-7.71-7.71ZM170.87 19.72c2.11-3.67 6.8-4.94 10.48-2.83 3.67 2.11 4.94 6.8 2.83 10.48l-9.88 17.1c-2.11 3.67-6.8 4.94-10.48 2.83-3.67-2.11-4.94-6.8-2.83-10.48ZM214.19 58.57c3.67-2.13 8.38-.87 10.51 2.8 2.13 3.67.88 8.38-2.8 10.51l-17.1 9.88c-3.67 2.13-8.38.87-10.51-2.8-2.13-3.67-.88-8.38 2.8-10.51ZM232.29 113.88c4.26 0 7.71 3.45 7.71 7.71 0 4.26-3.45 7.71-7.71 7.71h-19.75c-4.26 0-7.71-3.45-7.71-7.71 0-4.26 3.45-7.71 7.71-7.71ZM220.28 170.87c3.67 2.11 4.94 6.8 2.83 10.48-2.11 3.67-6.8 4.94-10.48 2.83l-17.1-9.88c-3.67-2.11-4.94-6.8-2.83-10.48 2.11-3.67 6.8-4.94 10.48-2.83ZM181.43 214.19c2.13 3.67.87 8.38-2.8 10.51-3.67 2.13-8.38.88-10.51-2.8l-9.88-17.1c-2.13-3.67-.87-8.38 2.8-10.51 3.67-2.13 8.38-.88 10.51 2.8ZM126.12 232.29c0 4.26-3.45 7.71-7.71 7.71-4.26 0-7.71-3.45-7.71-7.71v-19.75c0-4.26 3.45-7.71 7.71-7.71 4.26 0 7.71 3.45 7.71 7.71ZM69.13 220.28c-2.11 3.67-6.8 4.94-10.48 2.83-3.67-2.11-4.94-6.8-2.83-10.48l9.88-17.1c2.11-3.67 6.8-4.94 10.48-2.83 3.67 2.11 4.94 6.8 2.83 10.48ZM25.81 181.43c-3.67 2.13-8.38.87-10.51-2.8-2.13-3.67-.88-8.38 2.8-10.51l17.1-9.88c3.67-2.13 8.38-.87 10.51 2.8 2.13 3.67.88 8.38-2.8 10.51ZM7.71 126.12c-4.26 0-7.71-3.45-7.71-7.71 0-4.26 3.45-7.71 7.71-7.71h19.75c4.26 0 7.71 3.45 7.71 7.71 0 4.26-3.45 7.71-7.71 7.71ZM19.72 69.13c-3.67-2.11-4.94-6.8-2.83-10.48 2.11-3.67 6.8-4.94 10.48-2.83l17.1 9.88c3.67 2.11 4.94 6.8 2.83 10.48-2.11 3.67-6.8 4.94-10.48 2.83Z"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
 
-      <main>
-        <section class="hero">
-          <div class="wrap hero__grid">
-            <div class="hero__copy">
-              <p class="eyebrow">James Z</p>
-              <h1>Building a steady practice around models, tools, and small experiments.</h1>
-              <p class="lead">
-                This site is a working home for project notes, portfolio pieces, and essays about
-                learning machine learning in public. The current version is intentionally light on
-                polish and heavy on structure so it can grow with real work over time.
-              </p>
-              <div class="hero__actions">
-                <a class="button button--primary" href="/writing/">Read the notebook</a>
-                <a class="button button--ghost" href="/projects/">Browse projects</a>
-              </div>
-            </div>
-            <aside class="hero-card">
-              <div class="hero-card__art">
-                <img src="/assets/img/monogram.svg" alt="" width="120" height="120">
-              </div>
-              <p class="hero-card__label">Current orientation</p>
-              <ul class="hero-card__list">
-                <li>Small-model baselines before large claims</li>
-                <li>Readable experiment logs over dashboard sprawl</li>
-                <li>Projects that can survive revision in public</li>
-              </ul>
-            </aside>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="wrap">
-            <div class="section-heading">
-              <p class="eyebrow">Featured Work</p>
-              <h2>Projects with room to mature into real case studies.</h2>
-            </div>
-            <div class="card-grid">
-              <article class="project-card">
-                <p class="project-card__meta">Evaluation · Placeholder</p>
-                <h3>Baseline Audit Notebook</h3>
-                <p>
-                  A compact workflow for checking whether a promising result is just a data leak,
-                  a lucky seed, or an actual improvement.
-                </p>
-                <a class="text-link" href="/projects/">See project notes</a>
-              </article>
-              <article class="project-card">
-                <p class="project-card__meta">Tooling · Placeholder</p>
-                <h3>Experiment Ledger</h3>
-                <p>
-                  A lightweight system for logging runs, decisions, and dead ends without pulling
-                  in a full platform stack on day one.
-                </p>
-                <a class="text-link" href="/projects/">See project notes</a>
-              </article>
-              <article class="project-card">
-                <p class="project-card__meta">Research Practice · Placeholder</p>
-                <h3>Paper-to-Prototype Cycle</h3>
-                <p>
-                  A monthly routine for turning one paper, one reproduction, and one written
-                  critique into a durable learning loop.
-                </p>
-                <a class="text-link" href="/projects/">See project notes</a>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="section section--muted">
-          <div class="wrap split">
-            <div>
-              <div class="section-heading">
-                <p class="eyebrow">Recent Writing</p>
-                <h2>Notes meant to age well.</h2>
-              </div>
-              <div class="writing-list">
-                <a class="writing-list__item" href="/writing/foundations-of-a-quiet-ml-lab/">
-                  <span class="writing-list__date">May 2026</span>
-                  <span class="writing-list__body">
-                    <strong>Foundations of a Quiet ML Lab</strong>
-                    <span>Why slow, legible workflows are often a better starting point than high-throughput ambition.</span>
-                  </span>
-                </a>
-                <a class="writing-list__item" href="/writing/shipping-small-model-experiments/">
-                  <span class="writing-list__date">May 2026</span>
-                  <span class="writing-list__body">
-                    <strong>Shipping Small-Model Experiments</strong>
-                    <span>How to make toy experiments useful instead of disposable.</span>
-                  </span>
-                </a>
-                <a class="writing-list__item" href="/writing/notes-on-baselines-before-benchmarks/">
-                  <span class="writing-list__date">May 2026</span>
-                  <span class="writing-list__body">
-                    <strong>Notes on Baselines Before Benchmarks</strong>
-                    <span>A short argument for proving boring things first.</span>
-                  </span>
-                </a>
-              </div>
-            </div>
-            <aside class="note-panel">
-              <p class="eyebrow">Contact</p>
-              <h3>Still assembling the public profile.</h3>
-              <p>
-                For now, this site assumes a simple publishing rhythm: build something small,
-                write down what happened, then refine the presentation later.
-              </p>
-              <div class="link-stack">
-                <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
-                <span class="muted">Email and additional social links will be added with real profile details.</span>
-              </div>
-            </aside>
-          </div>
-        </section>
+      <main class="site-frame home-page">
+        <h1 class="home-title">Hi, I'm James.</h1>
+        <p class="lede">
+          I'm just an average guy trying to navigate around in this world. I received a B.A. in Psychology
+          with a minor in Computer Science from UC Riverside. I am currently a software developer
+          at Epic Systems.
+        </p>
+        <p>
+          I use this site as a public diary to document my journey of learning and reading. I plan
+          to publish notes on papers I read, along with blog posts about the ideas on my mind.
+        </p>
+        <p>
+          Thank you for taking the time to visit my site. I hope you find something interesting
+          here.
+        </p>
       </main>
 
       <footer class="site-footer">
-        <div class="wrap site-footer__inner">
-          <p>James Z · A static GitHub Pages site for experiments, notes, and project writeups.</p>
-          <a class="text-link" href="https://github.com/MachineLearningAmateur">GitHub</a>
+        <div class="site-frame site-footer__inner">
+          <p>&copy; 2026</p>
+          <nav class="social-links" aria-label="Social links">
+            <a class="social-link" href="/assets/resume.pdf" aria-label="Resume" target="_blank" rel="noopener">
+              <svg viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M64 464l48 0 0 48-48 0c-35.3 0-64-28.7-64-64L0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 304l-48 0 0-144-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16zM176 352l32 0c30.9 0 56 25.1 56 56s-25.1 56-56 56l-16 0 0 32c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-48 0-80c0-8.8 7.2-16 16-16zm32 80c13.3 0 24-10.7 24-24s-10.7-24-24-24l-16 0 0 48 16 0zm96-80l32 0c26.5 0 48 21.5 48 48l0 64c0 26.5-21.5 48-48 48l-32 0c-8.8 0-16-7.2-16-16l0-128c0-8.8 7.2-16 16-16zm32 128c8.8 0 16-7.2 16-16l0-64c0-8.8-7.2-16-16-16l-16 0 0 96 16 0zm80-112c0-8.8 7.2-16 16-16l48 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 32 32 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-32 0 0 48c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-64 0-64z"/>
+              </svg>
+            </a>
+            <a class="social-link" href="https://github.com/MachineLearningAmateur" aria-label="GitHub">
+              <svg viewBox="0 0 496 512" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/>
+              </svg>
+            </a>
+            <a class="social-link" href="https://www.linkedin.com/in/james-zhang-cs/" aria-label="LinkedIn">
+              <svg viewBox="0 0 448 512" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+              </svg>
+            </a>
+          </nav>
         </div>
       </footer>
     </div>

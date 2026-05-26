@@ -3,11 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page Not Found - James Z</title>
-    <meta
-      name="description"
-      content="Not found page for James Z."
-    >
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ meta_description }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -47,8 +44,8 @@
           </a>
           <div class="site-header__actions">
             <nav class="site-nav" aria-label="Primary">
-              <a class="site-nav__link" href="/blog/">Blog</a>
-              <a class="site-nav__link" href="/reading/">Reading</a>
+              <a class="site-nav__link{% if active_section == 'blog' %} site-nav__link--active{% endif %}" href="/blog/">Blog</a>
+              <a class="site-nav__link{% if active_section == 'reading' %} site-nav__link--active{% endif %}" href="/reading/">Reading</a>
             </nav>
             <button
               class="theme-toggle"
@@ -68,18 +65,7 @@
         </div>
       </header>
 
-      <main class="site-frame list-page">
-        <p class="kicker">404</p>
-        <h1 class="page-title">That page is not here.</h1>
-        <p class="page-intro">
-          The link may be outdated, or the page may have been removed during the site cleanup.
-        </p>
-        <nav class="section-links" aria-label="Fallback links">
-          <a class="text-link" href="/">Home</a>
-          <a class="text-link" href="/blog/">Blog</a>
-          <a class="text-link" href="/reading/">Reading</a>
-        </nav>
-      </main>
+      {% block content %}{% endblock %}
 
       <footer class="site-footer">
         <div class="site-frame site-footer__inner">
