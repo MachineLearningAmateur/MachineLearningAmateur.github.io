@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reading - James Z</title>
-    <meta name="description" content="Reading notes and topics for James Z.">
+    <title>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models - James Z</title>
+    <meta name="description" content="Notes on Chain of Thought">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -66,22 +66,37 @@
       </header>
 
       
-      <main class="site-frame list-page">
-        <p class="kicker">Reading</p>
-        <div class="section-block item-list">
-          
-            
-          <a class="item-list__entry" href="/reading/chain-of-thought-prompting-elicits-reasoning-in-large-language-models/">
-            <span class="item-list__date">2026-05-26</span>
-            <span class="item-list__body">
-              <strong>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</strong>
-              <span>Notes on Chain of Thought</span>
-              <span class="meta">2 min read</span>
-            </span>
-          </a>
-            
-          
-        </div>
+      <main class="post-shell">
+        <header class="post-header">
+          <h1 class="post-title">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</h1>
+          <p class="post-meta">May 26, 2026 - 2 min read</p>
+        </header>
+
+        <article class="post-body">
+          <h2>Why this paper?</h2>
+<p>This paper will serve as an introduction to reading papers. At first glance of the paper&#x27;s title, I would like to learn more about what chain of thought is.</p>
+<h2>Context</h2>
+<p>Ling et al. (2017) pioneered the idea of using natural language rationales to solve math word problems through a series</p>
+<p>of intermediate steps (chain of thought). Their work is a remarkable contrast to the literature using formal languages</p>
+<p>to reason (Roy et al., 2015; Chiang and Chen, 2019; Amini et al., 2019; Chen et al., 2019). Cobbe</p>
+<p>et al. (2021) extend Ling et al. (2017) by creating a larger dataset and using it to finetune a pretrained</p>
+<p>language model rather than training a model from scratch. In the domain of program synthesis,</p>
+<p>Nye et al. (2021) leverage language models to predict the final outputs of Python programs via</p>
+<p>first line-to-line predicting the intermediate computational results, and show that their step-by-step</p>
+<p>prediction method performs better than directly predicting the final outputs. These approaches improve or augment the input part of the prompt (e.g., instructions that are prepended to inputs); this paper essentially zooms in on the orthogonal direction of augmenting the outputs of language models with a chain of thought by providing step by step reasoning to obtain the final answer.</p>
+<h2>Problem Statement</h2>
+<p>Large Language Models prior to this research did not achieve high performance on challenging tasks such as arithmetic, commonsense, and symbolic reasoning. The contribution of this paper is to explore how reasoning ability of large language models can be augmented by a simple method known as chain of thought prompting.</p>
+<h2>Notes</h2>
+<p>To set this up, they didn&#x27;t train or touch the model at all but rather they provided the model with additional context via prompting as such: [Input Question A] -&gt; [Chain of Thought A] -&gt; [Output Answer A] and then they ask a new question with [Input Question B].</p>
+<h2>Questions</h2>
+<p>Initially, I did not understand what they meant by prepending the inputs with a chain of thought. After reading through the introduction I finally understand what they meant. They didn&#x27;t have to train their models at all, just changing the way the prompt was written had a large effect on how the model can obtain logical reasoning.</p>
+<h2>Looking Forward</h2>
+<p>In this paper, chain of thought prompting was used for solving a complicated reasoning task such as a multi-step math word problem. I wonder if chain of thought prompting has been used for generating images via image diffusion or potentially even generating videos. I would imagine there is research done on this already so, this would be something worth reading more about.</p>
+        </article>
+
+        <nav class="post-nav">
+          <a class="text-link" href="/reading/">Back to Reading</a>
+        </nav>
       </main>
 
 
