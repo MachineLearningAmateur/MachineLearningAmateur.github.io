@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,56 +11,20 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap"
       rel="stylesheet"
     >
-    <script>
-      (() => {
-        const storageKey = "site-theme";
-        let theme = "light";
-
-        try {
-          const storedTheme = localStorage.getItem(storageKey);
-          if (storedTheme === "light" || storedTheme === "dark") {
-            theme = storedTheme;
-          } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            theme = "dark";
-          }
-        } catch (error) {
-          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            theme = "dark";
-          }
-        }
-
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
     <link rel="stylesheet" href="/assets/css/site.css">
-    <script src="/assets/js/theme.js" defer></script>
   </head>
   <body>
     <div class="site-shell">
       <header class="site-header">
         <div class="site-frame site-header__inner">
           <a class="site-mark" href="{{ url_for('admin_index') }}" aria-label="Authoring dashboard">
-            <span class="site-mark__name">James Z / Admin</span>
+            <span class="site-mark__name">Admin</span>
           </a>
           <div class="site-header__actions">
             <nav class="site-nav" aria-label="Authoring">
               <a class="site-nav__link{% if request.endpoint == 'admin_index' %} site-nav__link--active{% endif %}" href="{{ url_for('admin_index') }}">Dashboard</a>
               <a class="site-nav__link{% if request.endpoint == 'create_entry' %} site-nav__link--active{% endif %}" href="{{ url_for('create_entry') }}">New Entry</a>
             </nav>
-            <button
-              class="theme-toggle"
-              type="button"
-              aria-label="Switch to dark theme"
-              aria-pressed="false"
-              data-theme-toggle
-            >
-              <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M21 14.2A8.7 8.7 0 0 1 9.8 3a.75.75 0 0 0-.82.19A9.75 9.75 0 1 0 20.8 15a.75.75 0 0 0 .2-.8Z"/>
-              </svg>
-              <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 240 240" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M58.57 25.81c-2.13-3.67-.87-8.38 2.8-10.51 3.67-2.13 8.38-.88 10.51 2.8l9.88 17.1c2.13 3.67.87 8.38-2.8 10.51-3.67 2.13-8.38.88-10.51-2.8ZM120 51.17c19.01 0 36.21 7.7 48.67 20.16C181.12 83.79 188.83 101 188.83 120c0 19.01-7.7 36.21-20.16 48.67-12.46 12.46-29.66 20.16-48.67 20.16-19.01 0-36.21-7.7-48.67-20.16C58.88 156.21 51.17 139.01 51.17 120c0-19.01 7.7-36.21 20.16-48.67C83.79 58.88 101 51.17 120 51.17Zm38.27 30.56c-9.79-9.79-23.32-15.85-38.27-15.85-14.95 0-28.48 6.06-38.27 15.85-9.79 9.79-15.85 23.32-15.85 38.27 0 14.95 6.06 28.48 15.85 38.27 9.79 9.79 23.32 15.85 38.27 15.85 14.95 0 28.48-6.06 38.27-15.85 9.79-9.79 15.85-23.32 15.85-38.27 0-14.95-6.06-28.48-15.85-38.27ZM113.88 7.71c0-4.26 3.45-7.71 7.71-7.71 4.26 0 7.71 3.45 7.71 7.71v19.75c0 4.26-3.45 7.71-7.71 7.71-4.26 0-7.71-3.45-7.71-7.71ZM170.87 19.72c2.11-3.67 6.8-4.94 10.48-2.83 3.67 2.11 4.94 6.8 2.83 10.48l-9.88 17.1c-2.11 3.67-6.8 4.94-10.48 2.83-3.67-2.11-4.94-6.8-2.83-10.48ZM214.19 58.57c3.67-2.13 8.38-.87 10.51 2.8 2.13 3.67.88 8.38-2.8 10.51l-17.1 9.88c-3.67 2.13-8.38.87-10.51-2.8-2.13-3.67-.88-8.38 2.8-10.51ZM232.29 113.88c4.26 0 7.71 3.45 7.71 7.71 0 4.26-3.45 7.71-7.71 7.71h-19.75c-4.26 0-7.71-3.45-7.71-7.71 0-4.26 3.45-7.71 7.71-7.71ZM220.28 170.87c3.67 2.11 4.94 6.8 2.83 10.48-2.11 3.67-6.8 4.94-10.48 2.83l-17.1-9.88c-3.67-2.11-4.94-6.8-2.83-10.48 2.11-3.67 6.8-4.94 10.48-2.83ZM181.43 214.19c2.13 3.67.87 8.38-2.8 10.51-3.67 2.13-8.38.88-10.51-2.8l-9.88-17.1c-2.13-3.67-.87-8.38 2.8-10.51 3.67-2.13 8.38-.88 10.51 2.8ZM126.12 232.29c0 4.26-3.45 7.71-7.71 7.71-4.26 0-7.71-3.45-7.71-7.71v-19.75c0-4.26 3.45-7.71 7.71-7.71 4.26 0 7.71 3.45 7.71 7.71ZM69.13 220.28c-2.11 3.67-6.8 4.94-10.48 2.83-3.67-2.11-4.94-6.8-2.83-10.48l9.88-17.1c2.11-3.67 6.8-4.94 10.48-2.83 3.67 2.11 4.94 6.8 2.83 10.48ZM25.81 181.43c-3.67 2.13-8.38.87-10.51-2.8-2.13-3.67-.88-8.38 2.8-10.51l17.1-9.88c3.67-2.13 8.38-.87 10.51 2.8 2.13 3.67.88 8.38-2.8 10.51ZM7.71 126.12c-4.26 0-7.71-3.45-7.71-7.71 0-4.26 3.45-7.71 7.71-7.71h19.75c4.26 0 7.71 3.45 7.71 7.71 0 4.26-3.45 7.71-7.71 7.71ZM19.72 69.13c-3.67-2.11-4.94-6.8-2.83-10.48 2.11-3.67 6.8-4.94 10.48-2.83l17.1 9.88c3.67 2.11 4.94 6.8 2.83 10.48-2.11 3.67-6.8 4.94-10.48 2.83Z"/>
-              </svg>
-            </button>
           </div>
         </div>
       </header>

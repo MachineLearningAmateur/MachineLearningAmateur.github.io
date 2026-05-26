@@ -1,72 +1,98 @@
 {% extends "admin/base.html" %}
 
 {% block content %}
-      <div class="admin-toolbar">
-        <div>
+      <section class="admin-hero admin-panel">
+        <div class="admin-hero__copy">
           <p class="kicker">Authoring</p>
           <h1 class="page-title">{% if original_entry %}Edit entry{% else %}Create a new entry{% endif %}</h1>
+          <p class="admin-note">Saving regenerates the public site and then attempts a commit and push to <code>main</code>.</p>
         </div>
-        <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Back to Dashboard</a>
-      </div>
+        <div class="admin-hero__actions">
+          <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Back to Dashboard</a>
+        </div>
+      </section>
 
-      <p class="admin-note">Saving regenerates the static blog and reading pages, then attempts a git commit and push to <code>main</code>.</p>
+      <form class="admin-form" method="post" data-reading-template='{{ reading_template | tojson }}'>
+        <section class="admin-panel">
+          <div class="admin-panel__header">
+            <div>
+              <h2>Entry Details</h2>
+              <p class="admin-panel__subhead">Set the type, title, date, and summary.</p>
+            </div>
+          </div>
+          <div class="admin-form__grid">
+            <label class="form-field">
+              <span>Type</span>
+              <select name="entry_type">
+                <option value="blog"{% if form_state.entry_type == 'blog' %} selected{% endif %}>Blog</option>
+                <option value="reading"{% if form_state.entry_type == 'reading' %} selected{% endif %}>Reading</option>
+              </select>
+            </label>
 
-      <form class="admin-form" method="post">
-        <div class="admin-form__grid">
+            <label class="form-field">
+              <span>Date</span>
+              <input type="date" name="published_on" value="{{ form_state.published_on }}">
+            </label>
+          </div>
+
+          <div class="admin-form__stack">
+            <label class="form-field">
+              <span>Title</span>
+              <input id="title" type="text" name="title" value="{{ form_state.title }}" placeholder="Creating This Site">
+            </label>
+
+            <label class="form-field">
+              <span>Slug</span>
+              <input id="slug" type="text" name="slug" value="{{ form_state.slug }}" placeholder="creating-this-site">
+            </label>
+
+            <label class="form-field">
+              <span>Summary</span>
+              <input type="text" name="summary" value="{{ form_state.summary }}" placeholder="One-line summary for the index page">
+            </label>
+          </div>
+        </section>
+
+        <section class="admin-panel">
+          <div class="admin-panel__header">
+            <div>
+              <h2>Body</h2>
+              <p class="admin-panel__subhead">Write the post in Markdown.</p>
+            </div>
+          </div>
           <label class="form-field">
-            <span>Type</span>
-            <select name="entry_type">
-              <option value="blog"{% if form_state.entry_type == 'blog' %} selected{% endif %}>Blog</option>
-              <option value="reading"{% if form_state.entry_type == 'reading' %} selected{% endif %}>Reading</option>
-            </select>
+            <span>Content</span>
+            <textarea id="body-markdown" name="body_markdown" rows="18" placeholder="Write Markdown here...">{{ form_state.body_markdown }}</textarea>
           </label>
 
-          <label class="form-field">
-            <span>Date</span>
-            <input type="date" name="published_on" value="{{ form_state.published_on }}">
-          </label>
-        </div>
+          {% if original_entry %}
+          <p class="admin-note">Current public path: <code>/{{ original_entry.entry_type }}/{{ original_entry.slug }}/</code></p>
+          {% endif %}
 
-        <label class="form-field">
-          <span>Title</span>
-          <input id="title" type="text" name="title" value="{{ form_state.title }}" placeholder="Creating This Site">
-        </label>
-
-        <label class="form-field">
-          <span>Slug</span>
-          <input id="slug" type="text" name="slug" value="{{ form_state.slug }}" placeholder="creating-this-site">
-        </label>
-
-        <label class="form-field">
-          <span>Summary</span>
-          <input type="text" name="summary" value="{{ form_state.summary }}" placeholder="One-line summary for the index page">
-        </label>
-
-        <label class="form-field">
-          <span>Body</span>
-          <textarea name="body_markdown" rows="18" placeholder="Write Markdown here...">{{ form_state.body_markdown }}</textarea>
-        </label>
-
-        {% if original_entry %}
-        <p class="admin-note">Current public path: <code>/{{ original_entry.entry_type }}/{{ original_entry.slug }}/</code></p>
-        {% endif %}
-
-        <div class="admin-actions">
-          <button class="admin-button" type="submit">Save Entry</button>
-          <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Cancel</a>
-        </div>
+          <div class="admin-actions">
+            <button class="admin-button" type="submit">Save Entry</button>
+            <a class="admin-button admin-button--secondary" href="{{ url_for('admin_index') }}">Cancel</a>
+          </div>
+        </section>
       </form>
 
       <script>
         (() => {
           const titleInput = document.getElementById("title");
           const slugInput = document.getElementById("slug");
+          const entryTypeInput = document.querySelector('select[name="entry_type"]');
+          const bodyInput = document.getElementById("body-markdown");
+          const readingTemplate = JSON.parse(
+            document.querySelector("form[data-reading-template]")?.dataset.readingTemplate || '""'
+          );
 
-          if (!titleInput || !slugInput) {
+          if (!titleInput || !slugInput || !entryTypeInput || !bodyInput) {
             return;
           }
 
           let slugTouched = Boolean(slugInput.value.trim());
+          let bodyTouched = Boolean(bodyInput.value.trim());
+          let scaffoldApplied = entryTypeInput.value === "reading" && !bodyTouched;
 
           function slugify(value) {
             return value
@@ -83,6 +109,17 @@
 
           slugInput.addEventListener("input", () => {
             slugTouched = slugInput.value.trim().length > 0;
+          });
+
+          bodyInput.addEventListener("input", () => {
+            bodyTouched = bodyInput.value.trim().length > 0;
+          });
+
+          entryTypeInput.addEventListener("change", () => {
+            if (entryTypeInput.value === "reading" && !bodyTouched && !scaffoldApplied) {
+              bodyInput.value = readingTemplate;
+              scaffoldApplied = true;
+            }
           });
         })();
       </script>

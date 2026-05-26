@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, send_from_directory, url_for
 
 from site_builder import (
     build_site,
@@ -19,11 +20,36 @@ from site_builder import (
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("FLASK_SECRET_KEY", "local-dev-secret")
+ROOT = Path(__file__).resolve().parent
+
+READING_TEMPLATE = """## Why this paper?
+Why did I choose to read this paper? The source may be straightforward (for example, a class paper or professor recommendation) or more personally derived (for example, arXiv surfing or someone's reading list). I would like to add another line describing what I'd like to gain more insight on via this paper.
+
+## Context
+How did we get to this problem? In practice, this will likely be heavily drawn from the paper's related work section, but my own goal is to remind myself how this problem ties into other research. What was the state of affairs at the time of the paper's publication, and what gap is this paper zooming in on?
+
+## Problem Statement
+What is the problem? What's the contribution?
+
+## Notes
+Methods and results that stood out to me.
+
+## Questions
+What did I not understand? Will I address these gaps? If so, how? Also, what did I not understand initially, but then resolved? How did I arrive at the resolution?
+
+## Looking Forward
+Takeaways and free space for any additional thoughts. What are my conclusions, if any? Anything I can look into that might be worth trying?
+"""
 
 
 @app.route("/")
 def root() -> str:
     return redirect(url_for("admin_index"))
+
+
+@app.route("/assets/<path:filename>")
+def assets(filename: str):
+    return send_from_directory(ROOT / "assets", filename)
 
 
 @app.route("/admin")
@@ -45,11 +71,14 @@ def create_entry() -> str:
     requested_type = request.args.get("type", "").strip().lower()
     if requested_type in {"blog", "reading"}:
         form_state["entry_type"] = requested_type
+    if requested_type == "reading":
+        form_state["body_markdown"] = READING_TEMPLATE
     return render_template(
         "admin/form.html",
         form_state=form_state,
         original_entry=None,
         title="Create Entry - James Z",
+        reading_template=READING_TEMPLATE,
     )
 
 
@@ -67,6 +96,7 @@ def edit_entry(entry_type: str, slug: str) -> str:
         form_state=make_form_state(original_entry),
         original_entry=original_entry,
         title=f"Edit {original_entry.title} - James Z",
+        reading_template=READING_TEMPLATE,
     )
 
 
@@ -110,6 +140,7 @@ def handle_save(original_entry):
                 form_state=raw_form,
                 original_entry=fallback_entry,
                 title="Fix Entry - James Z",
+                reading_template=READING_TEMPLATE,
             ),
             400,
         )
