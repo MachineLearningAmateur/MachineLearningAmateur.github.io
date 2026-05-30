@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Layered Chain of Thought Prompting for Multi-Agent LLM Systems - James Z</title>
-    <meta name="description" content="https://arxiv.org/pdf/2501.18645">
+    <meta name="description" content="https://arxiv.org/abs/2501.18645">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -69,22 +69,22 @@
       <main class="post-shell">
         <header class="post-header">
           <h1 class="post-title">Layered Chain of Thought Prompting for Multi-Agent LLM Systems</h1>
-          <p class="post-meta">May 30, 2026 - 1 min read</p>
+          <p class="post-meta">May 30, 2026 - 3 min read</p>
         </header>
 
         <article class="post-body">
           <h2>Why this paper?</h2>
 <p>I chose to read this paper because I am interested in learning more about agents so I wanted to build on top of my previous paper which was related to chain of thoughts. In this paper, I look forward to learning how chain of thought prompting is leveraged for multi-agents.</p>
 <h2>Context</h2>
-<p>How did we get to this problem? In practice, this will likely be heavily drawn from the paper&#x27;s related work section, but my own goal is to remind myself how this problem ties into other research. What was the state of affairs at the time of the paper&#x27;s publication, and what gap is this paper zooming in on?</p>
+<p>This paper was built off of vanilla chain of thought prompting. and it called out that vanilla chain of thought prompting has limited scope for mid-course corrections. In other words, the models might generate plausible sounding rationales but may in reality be misleading end-users with factually incorrect statements. Other studies incorporate user-in-the-loop techniques to refine or verify their model outputs but they rarely create a structure for the entire chain of thought as a set of layers that systematically incorporate external checks. The goal of this paper is to segment reasoning into discrete, verifiable layers by providing a methodical pipeline for error interception and collaborative verification. In addition, the pipeline will be integrated with agents dedicated to specific tasks, creating &quot;a robust synergy between structured reasoning and distributed agent specialization&quot;. By utilizing this layered framework with chain of thought prompting, they were able to illustrate that &quot;layered chain of thought prompting surpasses vanilla chain of thought prompting in terms of transparency, correctness, and user engagement&quot;. This proposed methodology paves way for more reliable usage of LLMs in high stakes domains.</p>
 <h2>Problem Statement</h2>
-<p>What is the problem? What&#x27;s the contribution?</p>
+<p>The existing vanilla chain of thought prompting is prone to unverified reasoning and limited user interaction. These limitations have severe consequences in high stakes applications in healthcare for example. The goal of this paper is to provide a structure to allow for error interception and collaborative verification.</p>
 <h2>Notes</h2>
-<p>Methods and results that stood out to me.</p>
+<p>The layers consist of sub-problem identification, partial reasoning, verification, refinement, and progression. Each layer would yield a partial solution that allows for intercepts on mistakes that might have otherwise been hidden in a single, unverified chain of thought. Additionally, the use of agents allows for division of labor which can reduce the load on a single LLM by delegating specific tasks to simpler models or rule-based systems.</p>
 <h2>Questions</h2>
-<p>What did I not understand? Will I address these gaps? If so, how? Also, what did I not understand initially, but then resolved? How did I arrive at the resolution?</p>
+<p>I think the question of how they are breaking down the user query into sub problems can be initially confusing. This would require the user to be involved and provide that chain of thought for each layer of the problem. Fortunately, examples were provided and I could walk through them. It was also helpful to provide examples in different contexts such as medical triage, financial risk assessment, and agile engineering scenarios.</p>
 <h2>Looking Forward</h2>
-<p>Takeaways and free space for any additional thoughts. What are my conclusions, if any? Anything I can look into that might be worth trying?</p>
+<p>It seems that by breaking the problem down into smaller problems with additional chain of thought prompting, this could help LLMs account for thoughts that may have initially been missed. The idea of breaking the problem down into smaller problems is a common practice for solving LeetCode problems (e.g. recursion), so seeing that being applied to LLMs is interesting. By integrating agents, you can have an expert for each sub-problem, which will increase the confidence of the answer returned. A future study suggested is to look into how agent orchestration protocols (e.g. OpenClaw) can dispatch layers to to relevant domain agents automatically.</p>
         </article>
 
         <nav class="post-nav">
