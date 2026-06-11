@@ -101,6 +101,7 @@ def markdown_to_html(markdown_text: str) -> str:
     blocks: list[str] = []
     paragraph: list[str] = []
     list_items: list[str] = []
+    list_type: str | None = None
     in_code_block = False
     code_lines: list[str] = []
 
@@ -113,11 +114,13 @@ def markdown_to_html(markdown_text: str) -> str:
         paragraph = []
 
     def flush_list() -> None:
-        nonlocal list_items
+        nonlocal list_items, list_type
         if list_items:
             items = "".join(f"<li>{render_inline_markdown(item)}</li>" for item in list_items)
-            blocks.append(f"<ul>{items}</ul>")
+            tag = list_type or "ul"
+            blocks.append(f"<{tag}>{items}</{tag}>")
         list_items = []
+        list_type = None
 
     def flush_code_block() -> None:
         nonlocal code_lines
@@ -145,7 +148,6 @@ def markdown_to_html(markdown_text: str) -> str:
 
         if not stripped:
             flush_paragraph()
-            flush_list()
             continue
 
         heading_match = re.match(r"^(#{1,3})\s+(.*)$", stripped)
@@ -156,11 +158,24 @@ def markdown_to_html(markdown_text: str) -> str:
             blocks.append(f"<h{level}>{render_inline_markdown(heading_match.group(2))}</h{level}>")
             continue
 
+        ordered_match = re.match(r"^\d+\.\s+(.*)$", stripped)
+        if ordered_match:
+            flush_paragraph()
+            if list_type != "ol":
+                flush_list()
+                list_type = "ol"
+            list_items.append(ordered_match.group(1).strip())
+            continue
+
         if stripped.startswith("- "):
             flush_paragraph()
+            if list_type != "ul":
+                flush_list()
+                list_type = "ul"
             list_items.append(stripped[2:].strip())
             continue
 
+        flush_list()
         paragraph.append(stripped)
 
     if in_code_block:
