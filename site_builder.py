@@ -102,6 +102,7 @@ def markdown_to_html(markdown_text: str) -> str:
     paragraph: list[str] = []
     list_items: list[str] = []
     list_type: str | None = None
+    quote_lines: list[str] = []
     in_code_block = False
     code_lines: list[str] = []
 
@@ -122,6 +123,14 @@ def markdown_to_html(markdown_text: str) -> str:
         list_items = []
         list_type = None
 
+    def flush_quote() -> None:
+        nonlocal quote_lines
+        if quote_lines:
+            joined = " ".join(part.strip() for part in quote_lines if part.strip())
+            if joined:
+                blocks.append(f"<blockquote><p>{render_inline_markdown(joined)}</p></blockquote>")
+        quote_lines = []
+
     def flush_code_block() -> None:
         nonlocal code_lines
         code = "\n".join(code_lines)
@@ -135,6 +144,7 @@ def markdown_to_html(markdown_text: str) -> str:
         if stripped.startswith("```"):
             flush_paragraph()
             flush_list()
+            flush_quote()
             if in_code_block:
                 flush_code_block()
                 in_code_block = False
@@ -148,19 +158,29 @@ def markdown_to_html(markdown_text: str) -> str:
 
         if not stripped:
             flush_paragraph()
+            flush_quote()
             continue
 
         heading_match = re.match(r"^(#{1,3})\s+(.*)$", stripped)
         if heading_match:
             flush_paragraph()
             flush_list()
+            flush_quote()
             level = len(heading_match.group(1))
             blocks.append(f"<h{level}>{render_inline_markdown(heading_match.group(2))}</h{level}>")
+            continue
+
+        quote_match = re.match(r"^>\s?(.*)$", stripped)
+        if quote_match:
+            flush_paragraph()
+            flush_list()
+            quote_lines.append(quote_match.group(1).strip())
             continue
 
         ordered_match = re.match(r"^\d+\.\s+(.*)$", stripped)
         if ordered_match:
             flush_paragraph()
+            flush_quote()
             if list_type != "ol":
                 flush_list()
                 list_type = "ol"
@@ -169,6 +189,7 @@ def markdown_to_html(markdown_text: str) -> str:
 
         if stripped.startswith("- "):
             flush_paragraph()
+            flush_quote()
             if list_type != "ul":
                 flush_list()
                 list_type = "ul"
@@ -176,6 +197,7 @@ def markdown_to_html(markdown_text: str) -> str:
             continue
 
         flush_list()
+        flush_quote()
         paragraph.append(stripped)
 
     if in_code_block:
@@ -183,6 +205,7 @@ def markdown_to_html(markdown_text: str) -> str:
 
     flush_paragraph()
     flush_list()
+    flush_quote()
     return "\n".join(blocks)
 
 

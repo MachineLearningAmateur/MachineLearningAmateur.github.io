@@ -60,10 +60,60 @@
               <p class="admin-panel__subhead">Write the post in Markdown.</p>
             </div>
           </div>
-          <label class="form-field">
-            <span>Content</span>
-            <textarea id="body-markdown" name="body_markdown" rows="18" placeholder="Write Markdown here...">{{ form_state.body_markdown }}</textarea>
-          </label>
+          <div class="markdown-editor">
+            <div class="markdown-toolbar" aria-label="Markdown tools">
+              <div class="markdown-toolbar__group" role="group" aria-label="History">
+                <button class="markdown-toolbar__button" type="button" data-format="undo" title="Undo" aria-label="Undo">
+                  <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="redo" title="Redo" aria-label="Redo">
+                  <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="markdown-toolbar__group" role="group" aria-label="Structure">
+                <button class="markdown-toolbar__button markdown-toolbar__button--stacked" type="button" data-format="h2" title="Heading 2" aria-label="Insert heading 2">
+                  <i class="fa-solid fa-heading" aria-hidden="true"></i>
+                  <span>2</span>
+                </button>
+                <button class="markdown-toolbar__button markdown-toolbar__button--stacked" type="button" data-format="h3" title="Heading 3" aria-label="Insert heading 3">
+                  <i class="fa-solid fa-heading" aria-hidden="true"></i>
+                  <span>3</span>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="quote" title="Quote" aria-label="Insert quote">
+                  <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="code-block" title="Code block" aria-label="Insert code block">
+                  <i class="fa-solid fa-file-code" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="markdown-toolbar__group" role="group" aria-label="Inline formatting">
+                <button class="markdown-toolbar__button" type="button" data-format="bold" title="Bold" aria-label="Bold">
+                  <i class="fa-solid fa-bold" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="italic" title="Italic" aria-label="Italic">
+                  <i class="fa-solid fa-italic" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="code" title="Inline code" aria-label="Inline code">
+                  <i class="fa-solid fa-code" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-format="link" title="Link" aria-label="Insert link">
+                  <i class="fa-solid fa-link" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="markdown-toolbar__group" role="group" aria-label="Lists">
+                <button class="markdown-toolbar__button" type="button" data-list-kind="bullet" title="Bulleted list" aria-label="Insert bulleted list">
+                  <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                </button>
+                <button class="markdown-toolbar__button" type="button" data-list-kind="number" title="Numbered list" aria-label="Insert numbered list">
+                  <i class="fa-solid fa-list-ol" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <label class="form-field form-field--editor">
+              <span>Content</span>
+              <textarea id="body-markdown" name="body_markdown" rows="18" placeholder="Write Markdown here...">{{ form_state.body_markdown }}</textarea>
+            </label>
+          </div>
 
           {% if original_entry %}
           <p class="admin-note">Current public path: <code>/{{ original_entry.entry_type }}/{{ original_entry.slug }}/</code></p>
@@ -101,6 +151,150 @@
               .replace(/^-+|-+$/g, "") || "untitled-entry";
           }
 
+          function setBodyValue(nextValue, selectionStart, selectionEnd = selectionStart) {
+            bodyInput.value = nextValue;
+            bodyInput.focus();
+            bodyInput.setSelectionRange(selectionStart, selectionEnd);
+            bodyTouched = true;
+          }
+
+          function replaceSelection(before, after, fallback) {
+            const value = bodyInput.value;
+            const start = bodyInput.selectionStart;
+            const end = bodyInput.selectionEnd;
+            const selected = value.slice(start, end) || fallback;
+            const replacement = `${before}${selected}${after}`;
+            setBodyValue(
+              `${value.slice(0, start)}${replacement}${value.slice(end)}`,
+              start + before.length,
+              start + before.length + selected.length
+            );
+          }
+
+          function formatCurrentLines(prefix, fallback) {
+            const value = bodyInput.value;
+            const start = bodyInput.selectionStart;
+            const end = bodyInput.selectionEnd;
+            const lineStart = value.lastIndexOf("\n", Math.max(0, start - 1)) + 1;
+            const nextLineBreak = value.indexOf("\n", end);
+            const lineEnd = nextLineBreak === -1 ? value.length : nextLineBreak;
+            const selectedBlock = value.slice(lineStart, lineEnd);
+            const lines = selectedBlock.length ? selectedBlock.split("\n") : [fallback];
+            const formatted = lines
+              .map((line) => `${prefix}${line.replace(/^\s*(?:#{1,3}\s+|>\s*)/, "") || fallback}`)
+              .join("\n");
+
+            setBodyValue(
+              `${value.slice(0, lineStart)}${formatted}${value.slice(lineEnd)}`,
+              lineStart,
+              lineStart + formatted.length
+            );
+          }
+
+          function insertCodeBlock() {
+            const value = bodyInput.value;
+            const start = bodyInput.selectionStart;
+            const end = bodyInput.selectionEnd;
+            const selected = value.slice(start, end) || "code";
+            const replacement = `\n\`\`\`\n${selected}\n\`\`\`\n`;
+            setBodyValue(
+              `${value.slice(0, start)}${replacement}${value.slice(end)}`,
+              start + 5,
+              start + 5 + selected.length
+            );
+          }
+
+          function insertLink() {
+            const value = bodyInput.value;
+            const start = bodyInput.selectionStart;
+            const end = bodyInput.selectionEnd;
+            const selected = value.slice(start, end) || "link text";
+            const replacement = `[${selected}](https://example.com)`;
+            setBodyValue(
+              `${value.slice(0, start)}${replacement}${value.slice(end)}`,
+              start + 1,
+              start + 1 + selected.length
+            );
+          }
+
+          function runFormatAction(action) {
+            const commands = {
+              undo: () => {
+                bodyInput.focus();
+                document.execCommand("undo");
+              },
+              redo: () => {
+                bodyInput.focus();
+                document.execCommand("redo");
+              },
+              h2: () => formatCurrentLines("## ", "Heading"),
+              h3: () => formatCurrentLines("### ", "Heading"),
+              quote: () => formatCurrentLines("> ", "Quote"),
+              bold: () => replaceSelection("**", "**", "bold text"),
+              italic: () => replaceSelection("*", "*", "italic text"),
+              code: () => replaceSelection("`", "`", "code"),
+              link: insertLink,
+              "code-block": insertCodeBlock,
+            };
+
+            commands[action]?.();
+          }
+
+          function formatListSelection(kind) {
+            const markerFor = (index) => kind === "number" ? `${index + 1}. ` : "- ";
+            const value = bodyInput.value;
+            let start = bodyInput.selectionStart;
+            let end = bodyInput.selectionEnd;
+            const lineStart = value.lastIndexOf("\n", Math.max(0, start - 1)) + 1;
+            const nextLineBreak = value.indexOf("\n", end);
+            const lineEnd = nextLineBreak === -1 ? value.length : nextLineBreak;
+            const selectedBlock = value.slice(lineStart, lineEnd);
+            const lines = selectedBlock.length ? selectedBlock.split("\n") : [""];
+            const formatted = lines
+              .map((line, index) => {
+                const content = line.replace(/^\s*(?:[-*]\s+|\d+\.\s+)/, "");
+                return `${markerFor(index)}${content || "List item"}`;
+              })
+              .join("\n");
+
+            setBodyValue(
+              `${value.slice(0, lineStart)}${formatted}${value.slice(lineEnd)}`,
+              lineStart,
+              lineStart + formatted.length
+            );
+          }
+
+          function continueListOnEnter(event) {
+            if (event.key !== "Enter" || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) {
+              return;
+            }
+
+            const value = bodyInput.value;
+            const start = bodyInput.selectionStart;
+            const end = bodyInput.selectionEnd;
+            if (start !== end) {
+              return;
+            }
+
+            const lineStart = value.lastIndexOf("\n", Math.max(0, start - 1)) + 1;
+            const lineEnd = value.indexOf("\n", start);
+            const currentLine = value.slice(lineStart, lineEnd === -1 ? value.length : lineEnd);
+            const orderedMatch = currentLine.match(/^(\s*)(\d+)\.\s+/);
+            const bulletMatch = currentLine.match(/^(\s*)[-*]\s+/);
+
+            if (!orderedMatch && !bulletMatch) {
+              return;
+            }
+
+            const indent = (orderedMatch || bulletMatch)[1] || "";
+            const nextMarker = orderedMatch ? `${Number(orderedMatch[2]) + 1}. ` : "- ";
+            const insertion = `\n${indent}${nextMarker}`;
+
+            event.preventDefault();
+            bodyInput.setRangeText(insertion, start, end, "end");
+            bodyTouched = true;
+          }
+
           titleInput.addEventListener("input", () => {
             if (!slugTouched) {
               slugInput.value = slugify(titleInput.value);
@@ -115,11 +309,25 @@
             bodyTouched = bodyInput.value.trim().length > 0;
           });
 
+          bodyInput.addEventListener("keydown", continueListOnEnter);
+
           entryTypeInput.addEventListener("change", () => {
             if (entryTypeInput.value === "reading" && !bodyTouched && !scaffoldApplied) {
               bodyInput.value = readingTemplate;
               scaffoldApplied = true;
             }
+          });
+
+          document.querySelectorAll("[data-list-kind]").forEach((button) => {
+            button.addEventListener("click", () => {
+              formatListSelection(button.dataset.listKind);
+            });
+          });
+
+          document.querySelectorAll("[data-format]").forEach((button) => {
+            button.addEventListener("click", () => {
+              runFormatAction(button.dataset.format);
+            });
           });
         })();
       </script>
