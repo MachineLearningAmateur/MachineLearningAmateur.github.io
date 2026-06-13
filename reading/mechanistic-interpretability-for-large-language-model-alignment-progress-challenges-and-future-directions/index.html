@@ -78,7 +78,7 @@
 <h2>Context</h2>
 <p>The rapid advancement of LLMs has created an need for robust alignment techniques that ensure systems behave in accordance with human values and intentions. The paper focuses on the current state of affairs and what techniques are being used to advance mechanistic interpretability of LLMs.</p>
 <h2>Problem Statement</h2>
-<p>The problem is we need a robust way to understand the inner workings of LLMs and</p>
+<p>The problem is we need a robust way to understand the inner workings of LLMs in order to do proper model alignment. If the model is always a blackbox then our ability to actively make changes to it is very limited.</p>
 <h2>Notes</h2>
 <p>Methods and results that stood out to me.</p>
 <ol><li>SPAEs (sparse autoencoders) - attempts to address the superposition challenge by training autoencoders to decompose neural activations into interpretable features.</li><li>Circuit analysis - identifying minimal subgraphs of a neural network that are responsible for particular behaviors. It seems like there are some recent methods that allow for automation of circuit identification using techniques like attribution patching, path patching, and edge pruning.</li></ol>
