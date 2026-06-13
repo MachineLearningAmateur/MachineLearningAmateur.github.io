@@ -2,11 +2,16 @@
 title: Chain-of-Thought Prompting Elicits Reasoning in Large Language Models
 slug: chain-of-thought-prompting-elicits-reasoning-in-large-language-models
 date: '2026-05-26'
-summary: https://arxiv.org/abs/2201.11903
+summary: Intro to Chain of Thought
 type: reading
+paper_url: https://arxiv.org/abs/2201.11903
 ---
 
 ## Why this paper?
+
+
+
+
 
 
 
@@ -18,7 +23,19 @@ This paper will serve as an introduction to reading papers. At first glance of t
 
 
 
+
+
+
+
+
+
+
+
 ## Context
+
+
+
+
 
 
 
@@ -30,7 +47,19 @@ Ling et al. (2017) pioneered the idea of using natural language rationales to so
 
 
 
+
+
+
+
+
+
+
+
 ## Problem Statement
+
+
+
+
 
 
 
@@ -42,7 +71,19 @@ Large Language Models prior to this research did not achieve high performance on
 
 
 
+
+
+
+
+
+
+
+
 ## Notes
+
+
+
+
 
 
 
@@ -54,7 +95,19 @@ To set this up, they didn't train or touch the model at all but rather they prov
 
 
 
+
+
+
+
+
+
+
+
 ## Questions
+
+
+
+
 
 
 
@@ -66,7 +119,19 @@ Initially, I did not understand what they meant by prepending the inputs with a 
 
 
 
+
+
+
+
+
+
+
+
 ## Looking Forward
+
+
+
+
 
 
 
